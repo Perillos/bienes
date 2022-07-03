@@ -4,7 +4,7 @@ import usuarioRoutes from './routes/usuario.routes.js'
 
 const app = express()
 
-app.use('/us', usuarioRoutes)
+app.use('/', usuarioRoutes)
 
 const port = 3000;
 
