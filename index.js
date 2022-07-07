@@ -10,6 +10,10 @@ app.set('view engine', 'pug')
 // La carpeta donde estan las vistas
 app.set('views', './views')
 
+
+// Carptea pública
+app.use()
+
 // Routing
 app.use('/auth', usuarioRoutes)
 
