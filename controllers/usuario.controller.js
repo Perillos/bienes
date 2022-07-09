@@ -13,8 +13,8 @@ const forRegister = (req, res) => {
 }
 
 const formForgoPass = (req, res) => {
-    res.render('auth/registro', {
-
+    res.render('auth/forgot-pass', {
+        page: 'Recupera Tu Contraseña'
     })
 }
 
