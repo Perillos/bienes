@@ -564,6 +564,9 @@ video {
 .block {
   display: block;
 }
+.contents {
+  display: contents;
+}
 .min-h-screen {
   min-height: 100vh;
 }
