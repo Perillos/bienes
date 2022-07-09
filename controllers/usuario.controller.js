@@ -1,20 +1,26 @@
 
 
-const formularioLogin = (req, res) => {
+const formLogin = (req, res) => {
     res.render('auth/login', {
-        pagina: 'Iniciar sesión'
+        page: 'Iniciar sesión'
     })
 }
 
-const formularioRegistro = (req, res) => {
+const forRegister = (req, res) => {
+    res.render('auth/register', {
+        page: 'Crear Cuenta'
+    })
+}
+
+const formForgoPass = (req, res) => {
     res.render('auth/registro', {
-        pagina: 'Crear Cuenta'
 
     })
 }
 
 
 export {
-    formularioLogin,
-    formularioRegistro
+    formLogin,
+    forRegister,
+    formForgoPass
 }
