@@ -1,6 +1,6 @@
 // const express = require('express');
 import express from 'express'
-import userRoutes from './routes/usuario.routes.js'
+import userRoutes from './routes/user.routes.js'
 
 // Crar la app
 const app = express()
