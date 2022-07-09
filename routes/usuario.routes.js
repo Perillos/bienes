@@ -1,12 +1,13 @@
 import express from 'express';
-import { formularioLogin, formularioRegistro } from '../controllers/usuario.controller.js';
+import { formForgoPass, formRegister, formLogin } from '../controllers/usuario.controller.js';
 
 
 const router = express.Router();
 
 
-router.get('/login', formularioLogin);
-router.get('/registro', formularioRegistro)
+router.get('/login', formLogin);
+router.get('/register', formRegister)
+router.get('/forgotPass', formForgoPass)
 
 
 

@@ -2,7 +2,6 @@ extends ../layout/index
 
 
 block contents
-    //- para los div, no hace falta poner la palabra div, si lleva calses puedes ponerle la clase y se crea un div con esa clase    
     .py-10
         h1.text-4xl.my-10.font-extrabold.text-center Bienes
             span.font-normal Raices
@@ -14,12 +13,9 @@ block contents
                     div
                         label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="email") Email de registro
                         input#email.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Tu Email" type="email" name="email")
-                    div
-                        label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="password") Contraseña
-                        input#password.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Password" type="password" name="password")
 
                     .flex.items-center.justify-between
+                        a.text-gray-500.text-xs(href="/auth/login") Si ya tienes cuenta, Inicia Sesión
                         a.text-gray-500.text-xs(href="/auth/register") Si no tienes cuenta, Crea Tu Cuenta
-                        a.text-gray-500.text-xs(href="/auth/forgotPass") Olvidaste Tu Contraseña
 
-                    input.w-full.bg-indigo-600.text-white.font-bold.py-3.cursor-pointer(class="hover:bg-indigo-700" type="submit" value="Crear Cuenta")
+                    input.w-full.bg-indigo-600.text-white.font-bold.py-3.cursor-pointer(class="hover:bg-indigo-700" type="submit" value="Recuperar Password")
