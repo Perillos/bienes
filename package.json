@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "node index.js",
-    "server": "nodemon index.js"
+    "server": "nodemon index.js",
+    "css": "postcss public/css/tailwind.css -o public/css/app.css"
   },
   "author": "Fernando Valero",
   "dependencies": {

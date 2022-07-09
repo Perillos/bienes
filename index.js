@@ -12,7 +12,7 @@ app.set('views', './views')
 
 
 // Carptea pública
-app.use()
+app.use( express.static('public'))
 
 // Routing
 app.use('/auth', usuarioRoutes)
@@ -23,6 +23,6 @@ const port = 3000;
 
 // Arranque del proyecto
 app.listen(port, () => {
-    console.log(`El Servidor esta funcionando en el puero ${port}`);
+    console.log(`El Servidor esta funcionando en el puero http://localhost:${port}`);
 })
 
