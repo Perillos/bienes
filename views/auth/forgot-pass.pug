@@ -14,5 +14,8 @@ block contents
                         label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="email") Email de registro
                         input#email.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Tu Email" type="email" name="email")
 
+                    .flex.items-center.justify-between
+                        a.text-gray-500.text-xs(href="/auth/login") Si ya tienes cuenta, Inicia Sesión
+                        a.text-gray-500.text-xs(href="/auth/register") Si no tienes cuenta, Crea Tu Cuenta
 
                     input.w-full.bg-indigo-600.text-white.font-bold.py-3.cursor-pointer(class="hover:bg-indigo-700" type="submit" value="Recuperar Password")

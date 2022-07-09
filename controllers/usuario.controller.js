@@ -2,11 +2,11 @@
 
 const formLogin = (req, res) => {
     res.render('auth/login', {
-        page: 'Iniciar sesión'
+        page: 'Iniciar Sesión'
     })
 }
 
-const forRegister = (req, res) => {
+const formRegister = (req, res) => {
     res.render('auth/register', {
         page: 'Crear Cuenta'
     })
@@ -21,6 +21,6 @@ const formForgoPass = (req, res) => {
 
 export {
     formLogin,
-    forRegister,
+    formRegister,
     formForgoPass
 }
