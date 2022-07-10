@@ -11,7 +11,7 @@ try {
     await db.authenticate();
     console.log('Conexión Correcta a la Base de Datos');
 } catch (error) {
-    console.log(`Error en la conexión con al base de datos: ${error}`);
+    console.log('Error en la conexión con al base de datos');
 }
 
 // Habiliar pug
