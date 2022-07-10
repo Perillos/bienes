@@ -1,5 +1,5 @@
 import express from 'express';
-import { formForgoPass, formRegister, formLogin } from '../controllers/usuario.controller.js';
+import { formForgoPass, formRegister, formLogin } from '../controllers/user.controller.js';
 
 
 const router = express.Router();
