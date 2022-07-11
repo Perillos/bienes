@@ -1,4 +1,4 @@
-
+import User from '../models/user.model.js'
 
 const formLogin = (req, res) => {
     res.render('auth/login', {
@@ -12,6 +12,12 @@ const formRegister = (req, res) => {
     })
 }
 
+const postRegister = async (req, res) => {
+    console.log(req.body); 
+    const user = await User.create(req.body)
+    res.json(user)
+}
+
 const formForgoPass = (req, res) => {
     res.render('auth/forgot-pass', {
         page: 'Recupera Tu Contraseña'
@@ -22,5 +28,6 @@ const formForgoPass = (req, res) => {
 export {
     formLogin,
     formRegister,
+    postRegister,
     formForgoPass
 }
