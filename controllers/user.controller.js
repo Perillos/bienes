@@ -1,3 +1,4 @@
+import { check, validationResult } from 'express-validator'
 import User from '../models/user.model.js'
 
 const formLogin = (req, res) => {
@@ -13,7 +14,13 @@ const formRegister = (req, res) => {
 }
 
 const postRegister = async (req, res) => {
-    console.log(req.body); 
+    // Validación
+    await check('name').notEmpty().run(req)
+
+    let result = validationResult(req)
+
+    res.json(result)
+
     const user = await User.create(req.body)
     res.json(user)
 }
