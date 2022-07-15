@@ -41,7 +41,7 @@ const postRegister = async (req, res) => {
     // Con object literal y destructuring no hace falta poner email: req.body.email, pondría email: email y como es igual se puedo poner solo email.
 
     // Verificar que el usuario no está duplicado
-    const existUser = await User.findOne( { were: { email: req.body.email } } ) // Busca si hay usuarios en la base de datos
+    const existUser = await User.findOne( { where: { email: req.body.email } } ) // Busca si hay usuarios en la base de datos
     
     if (existUser) { // Si encuentra pasa por el if
         return res.render('auth/register', {
@@ -62,11 +62,15 @@ const postRegister = async (req, res) => {
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
-        token: 123
+        token: generarId()
     })
 
-    
-}
+    // Mensaje de confimación
+    res.render('templates/message', {
+        page: 'Cuenta Creada Correctamente',
+        message: 'Te hemos enviado un email de Confirmación con un Enlace, haz Click en él para Activar tu Cuenta'
+    })
+}  
 
 const formForgoPass = (req, res) => {
     res.render('auth/forgot-pass', {
