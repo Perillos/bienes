@@ -1,5 +1,6 @@
 import { check, validationResult } from 'express-validator'
 import User from '../models/user.model.js'
+import { generarId } from '../helpers/tokens.js'
 
 const formLogin = (req, res) => {
     res.render('auth/login', {
@@ -35,10 +36,13 @@ const postRegister = async (req, res) => {
             }
         })
     }
+    // Tambien puedo extra los datos con destructuring
+    // const { nombre, email, password } = req.body
+    // Con object literal y destructuring no hace falta poner email: req.body.email, pondría email: email y como es igual se puedo poner solo email.
 
     // Verificar que el usuario no está duplicado
     const existUser = await User.findOne( { were: { email: req.body.email } } ) // Busca si hay usuarios en la base de datos
-
+    
     if (existUser) { // Si encuentra pasa por el if
         return res.render('auth/register', {
             page: 'Crear Cuenta',
@@ -52,8 +56,16 @@ const postRegister = async (req, res) => {
         })
     }
 
-    const user = await User.create(req.body)
-    res.json(user)
+    // Enviar a la BBDD el usuario
+    // await User.create(req.body) con esto creamos el usuario con los datos que ingresa en el formulario, pero queremos enviar más datos
+    await User.create({
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password,
+        token: 123
+    })
+
+    
 }
 
 const formForgoPass = (req, res) => {
