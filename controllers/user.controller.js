@@ -1,6 +1,7 @@
 import { check, validationResult } from 'express-validator'
 import User from '../models/user.model.js'
 import { generarId } from '../helpers/tokens.js'
+import { emailRegister } from '../helpers/emails.js'
 
 const formLogin = (req, res) => {
     res.render('auth/login', {
@@ -58,11 +59,18 @@ const postRegister = async (req, res) => {
 
     // Enviar a la BBDD el usuario
     // await User.create(req.body) con esto creamos el usuario con los datos que ingresa en el formulario, pero queremos enviar más datos
-    await User.create({
+    const userGern = await User.create({
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
         token: generarId()
+    })
+
+    // Enviar email de confirmación
+    emailRegister({
+        nombre: userGern.name,
+        email: userGern.email,
+        token: userGern.token
     })
 
     // Mensaje de confimación
