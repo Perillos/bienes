@@ -32,7 +32,7 @@ app.use('/auth', userRoutes)
 
 
 // Define el puerto
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Arranque del proyecto
 app.listen(port, () => {

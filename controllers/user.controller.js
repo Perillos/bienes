@@ -78,7 +78,15 @@ const postRegister = async (req, res) => {
         page: 'Cuenta Creada Correctamente',
         message: 'Te hemos enviado un email de Confirmación con un Enlace, haz Click en él para Activar tu Cuenta'
     })
-}  
+}
+
+// Función que comprueba la cuenta
+
+const getConfirm = (req, res) => {
+    // Podemos hacer destructuring
+    // const { token } = req.params
+    console.log(req.params.token);
+}
 
 const formForgoPass = (req, res) => {
     res.render('auth/forgot-pass', {
@@ -91,5 +99,6 @@ export {
     formLogin,
     formRegister,
     postRegister,
+    getConfirm,
     formForgoPass
 }

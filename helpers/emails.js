@@ -23,7 +23,7 @@ const emailRegister = async (data) => {
     html: `
         <p>Hola ${nombre}, agredecemos tu registro en Bienes Raices. Este correo es de confirmación.</p>
 
-        <p> Tu cuenta ya está lista, sólo debes activarla en el siguiente enlace: <a href=""> ACTIVAR CUENTA</a>.</p>
+        <p> Tu cuenta ya está lista, sólo debes activarla en el siguiente enlace: <a href="${process.env.URL}:${process.env.PORT}/auth/confirm/${token}"> ACTIVAR CUENTA</a>.</p>
         <p>Si no te registraste en Bienes Raices, puedes ignorar este mensaje.</p>
     `
   })
