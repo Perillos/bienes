@@ -82,10 +82,21 @@ const postRegister = async (req, res) => {
 
 // Función que comprueba la cuenta
 
-const getConfirm = (req, res) => {
+const getConfirm = async (req, res) => {
     // Podemos hacer destructuring
     // const { token } = req.params
-    console.log(req.params.token);
+    const { token } = req.params
+
+    // Verificar si el token es válido
+    // const userToken = await User.findOne( { where: { token: req.params.token } } ) // si usamos destructurin
+    const userToken = await User.findOne( { where: { token } } )
+
+    if(!userToken) {
+        
+    }
+
+
+    // Confirmar la cuenta
 }
 
 const formForgoPass = (req, res) => {
