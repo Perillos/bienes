@@ -3,13 +3,13 @@ import User from '../models/user.model.js'
 import { generarId } from '../helpers/tokens.js'
 import { emailRegister } from '../helpers/emails.js'
 
-const formLogin = (req, res) => {
+const getFormLogin = (req, res) => {
     res.render('auth/login', {
         page: 'Iniciar Sesión'
     })
 }
 
-const formRegister = (req, res) => {
+const getFormRegister = (req, res) => {
     res.render('auth/register', {
         page: 'Crear Cuenta'
     })
@@ -92,24 +92,78 @@ const getConfirm = async (req, res) => {
     const userToken = await User.findOne( { where: { token } } )
 
     if(!userToken) {
-        
+        return res.render('auth/confirm-count', {
+            page: 'Error al confirmar tu cuenta',
+            message: 'Hubo un error al confirmar tu cuenta, intentalo de nuevo',
+            error: true
+        })
     }
 
-
     // Confirmar la cuenta
+    userToken.token = null
+    userToken.confirmed = true
+    await userToken.save()
+    res.render('auth/confirm-count', {
+        page: 'Cuenta Confirmada',
+        message: 'La cuenta se confirmó Correctamente',
+    })
+
 }
 
-const formForgoPass = (req, res) => {
+const getFormForgoPass = (req, res) => {
     res.render('auth/forgot-pass', {
         page: 'Recupera Tu Contraseña'
     })
 }
 
+const postFormForgoPass = async (req, res) => {
+    // Validación de email correcto
+    await check('email').isEmail().withMessage('Escribe un Email válido').run(req)
+
+    let result = validationResult(req)
+
+    if (!result.isEmpty()) { // Hay errores, resutl no esta vacio por lo que hay errores
+        return res.render('auth/forgot-pass', {
+            page: 'Crear Cuenta',
+            errors: result.array(),
+        })
+    }
+
+    // Buscar el usuario
+    const { email } = req.body
+    const userFind = await User.findOne( { where: {email} } )
+    // Si el usuario no existe
+    if (!userFind) {
+
+    }
+
+    // General token
+    userFind.token = generarId();
+    await userFind.save()
+
+    // Enviar email
+
+
+
+}
+
+const getResetPass = (req, res) => {
+
+}
+
+const postResetPass = (req, res) => {
+
+}
+
+
 
 export {
-    formLogin,
-    formRegister,
+    getFormLogin,
+    getFormRegister,
     postRegister,
     getConfirm,
-    formForgoPass
+    getFormForgoPass,
+    postFormForgoPass,
+    getResetPass,
+    postResetPass
 }

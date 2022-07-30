@@ -1,15 +1,18 @@
 import express from 'express';
-import { formForgoPass, formRegister, formLogin, postRegister, getConfirm } from '../controllers/user.controller.js';
+import { getFormLogin, getFormRegister, postRegister, getConfirm, getFormForgoPass, postFormForgoPass, getResetPass, postResetPass } from '../controllers/user.controller.js';
 
 
 const router = express.Router();
 
 
-router.get('/login', formLogin);
-router.get('/register', formRegister);
+router.get('/login', getFormLogin);
+router.get('/register', getFormRegister);
 router.post('/register', postRegister);
 router.get('/confirm/:token', getConfirm)
-router.get('/forgotPass', formForgoPass)
+router.get('/forgotPass', getFormForgoPass)
+router.post('/forgotPass', postFormForgoPass)
+router.get('/forgotPass/:token', getResetPass)
+router.post('/forgotPass/:token', postResetPass)
 
 
 

@@ -7,4 +7,8 @@ block contents
             span.font-normal Raices
         h2.text-center.text-2xl.font-extrabold= page
 
-        p.py-2.px-5.rounde-lg.w-full (class= error ? 'bg-red-500' : 'bg-green-500')= message
+    .bg-white.shadow.py-8.px-4.rounded-lg.max-w-md.mx-auto
+        p.py-2.px-5.rounded-lg.w-full.font-bold.text-center.text-white.uppercase(class= error ? 'bg-red-500' : 'bg-green-500')= message
+
+        if !error
+            a(href='/auth/login' class= 'text-center font-bold text-sm text-slate-600 uppercase mt-10 block') Ya puedes iniciar sesión.
