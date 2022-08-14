@@ -1,7 +1,7 @@
 import { check, validationResult } from 'express-validator'
 import User from '../models/user.model.js'
 import { generarId } from '../helpers/tokens.js'
-import { emailRegister } from '../helpers/emails.js'
+import { emailRegister, emailForgotPass } from '../helpers/emails.js'
 
 const getFormLogin = (req, res) => {
     res.render('auth/login', {
@@ -142,17 +142,54 @@ const postFormForgoPass = async (req, res) => {
     await userFind.save()
 
     // Enviar email
+    emailForgotPass({
+        email: userFind.email,
+        nombre: userFind.nombre,
+        token: userFind.token
+    })
 
+    // Mensaje de confimación
+    res.render('templates/message', {
+        page: 'Recupera tu contraseña',
+        message: 'Te hemos enviado un email con las intrucciones para recuperar tu contraseña'
+    })
 
 
 }
 
-const getResetPass = (req, res) => {
+const checkToken = async (req, res) => {
+    
+    const { token } = req.params;
 
+    const userFind = await User.findOne( { where: {token} } )
+    // Mostrar mensaje si no existe un usuario con ese token
+    if(!userFind) {
+        return res.render('auth/confirm-count', {
+            pagina: 'Reestablece tu Password',
+            mensaje: 'Hubo un error al validar tu información, intentalo de nuevo.',
+            error: true
+        })
+    }
+
+    // Mostrar formulario para modificar el password
+    res.render('auth/reset-password', {
+        pagina: 'Reestablece tu Password'
+    })
 }
 
 const postResetPass = (req, res) => {
+    // Validar el Password
+    await check('password').isLength({ min: 6 }).withMessage('La contraseña tien que tener 6 caracteres').run(req)
+    await check('rep_password').equals(req.body.password).withMessage('Las contraseña no son iguales').run(req)
+    let result = validationResult(req)
 
+    // Verificar los errores
+    if(!result.isEmpty()) {
+        // Errores
+        return res.render('auth/reset-password', {
+            pagina: 'Reestablece tu Password'
+        })
+    }
 }
 
 
@@ -164,6 +201,6 @@ export {
     getConfirm,
     getFormForgoPass,
     postFormForgoPass,
-    getResetPass,
+    checkToken,
     postResetPass
 }

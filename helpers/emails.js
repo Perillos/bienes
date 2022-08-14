@@ -23,7 +23,7 @@ const emailRegister = async (data) => {
     html: `
         <p>Hola ${nombre}, agredecemos tu registro en Bienes Raices. Este correo es de confirmación.</p>
 
-        <p> Tu cuenta ya está lista, sólo debes activarla en el siguiente enlace: <a href="${process.env.URL}:${process.env.PORT}/auth/confirm/${token}"> ACTIVAR CUENTA</a>.</p>
+        <p> Tu cuenta ya está lista, sólo debes activarla en el siguiente enlace: <a href="${process.env.URL}:${process.env.PORT}/auth/confirm/${token}">ACTIVAR CUENTA</a>.</p>
         <p>Si no te registraste en Bienes Raices, puedes ignorar este mensaje.</p>
     `
   })
@@ -51,10 +51,13 @@ const emailForgotPass = async (data) => {
     html: `
         <p>Hola ${nombre}, has solicitado recuperar tu cuenta en Bienes Raices. Desde este correo podras cambiar la contraseña para poder entrar en tu cuenta.</p>
 
-        <p> Para reestablecer la cuenta sólo debes entrar al siguiente enlace y generar una nueva contraseña: <a href="${process.env.URL}:${process.env.PORT}/auth/confirm/${token}"> ACTIVAR CUENTA</a>.</p>
+        <p> Para reestablecer la cuenta sólo debes entrar al siguiente enlace y generar una nueva contraseña: <a href="${process.env.URL}:${process.env.PORT}/auth/forgotPass/${token}">RECUPERAR CONTRASEÑA</a>.</p>
         <p>Si no has solicitado recuperar tu contraseña en Bienes Raices, puedeque alguien esté intentando robarte la cuenta. ¡¡ALERTA, NO REENVIES ESTE CORREO A NADIE!!, si fuera necesario ponte en contacto con nosotros.</p>
     `
   })
 };
 
-export { emailRegister };
+export { 
+  emailRegister,
+  emailForgotPass
+};
