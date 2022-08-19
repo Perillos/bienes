@@ -1,4 +1,5 @@
 import { check, validationResult } from 'express-validator'
+import bcrypt from 'bcrypt'
 import User from '../models/user.model.js'
 import { generarId } from '../helpers/tokens.js'
 import { emailRegister, emailForgotPass } from '../helpers/emails.js'
@@ -165,31 +166,50 @@ const checkToken = async (req, res) => {
     // Mostrar mensaje si no existe un usuario con ese token
     if(!userFind) {
         return res.render('auth/confirm-count', {
-            pagina: 'Reestablece tu Password',
-            mensaje: 'Hubo un error al validar tu información, intentalo de nuevo.',
+            page: 'Reestablece tu Password',
+            message: 'Hubo un error al validar tu información, intentalo de nuevo.',
             error: true
         })
     }
 
     // Mostrar formulario para modificar el password
     res.render('auth/reset-password', {
-        pagina: 'Reestablece tu Password'
+        page: 'Reestablece tu Password'
     })
 }
 
-const postResetPass = (req, res) => {
+const postResetPass = async (req, res) => {
     // Validar el Password
     await check('password').isLength({ min: 6 }).withMessage('La contraseña tien que tener 6 caracteres').run(req)
     await check('rep_password').equals(req.body.password).withMessage('Las contraseña no son iguales').run(req)
     let result = validationResult(req)
-
+    
     // Verificar los errores
     if(!result.isEmpty()) {
         // Errores
         return res.render('auth/reset-password', {
-            pagina: 'Reestablece tu Password'
+            page: 'Reestablece tu Password',
+            errors: result.array()
         })
     }
+
+    const { token } = req.params;
+    const { password } = req.body;
+
+    // Indentificar quien hace el cambio
+    const user = await User.findOne( { where: {token} } )
+
+    // Hashear el nuevo password
+    const salt = await bcrypt.genSalt(10)
+    user.password = await bcrypt.hash( password, salt);
+    user.token = null;
+
+    await user.save();
+
+    res.render('auth/confirm-count', {
+        page: 'Contraseña Reestablecida',
+        message: 'La Contraseña se guardo correctamente'
+    })
 }
 
 
