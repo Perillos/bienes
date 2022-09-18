@@ -1,9 +1,12 @@
 
+import jwt from 'jsonwebtoken'
+
+const generateJWT = data => jwt.sign({ id: data.id }, process.env.JWR_SECRET, { expiresIn: '15s' })
 
 
-
-const generarId = () => Math.random().toString(32).substring(2) + Date.now().toString(32)
+const generateId = () => Math.random().toString(32).substring(2) + Date.now().toString(32)
 
 export {
-    generarId
+    generateJWT,
+    generateId
 }

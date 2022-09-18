@@ -1,7 +1,7 @@
 import { check, validationResult } from 'express-validator'
 import bcrypt from 'bcrypt'
 import User from '../models/user.model.js'
-import { generarId } from '../helpers/tokens.js'
+import { generateJWT, generateId } from '../helpers/tokens.js'
 import { emailRegister, emailForgotPass } from '../helpers/emails.js'
 
 const getFormLogin = (req, res) => {
@@ -9,6 +9,63 @@ const getFormLogin = (req, res) => {
         page: 'Iniciar Sesión'
     })
 }
+
+const postFormLogin = async (req, res) => {
+    // Validación del formulario
+    await check('email').isEmail().withMessage('El Email es Obligatorio').run(req)
+    await check('password').isLength({ min: 6 }).withMessage('La contraseña es Obligatoria').run(req)
+
+    let result = validationResult(req)
+
+    //Verificar que el resultado este vacio
+    if(!result.isEmpty()) {
+        // Errores
+        return res.render('auth/login', {
+            pagina: 'Iniciar Sesión',
+            errors: result.array()
+        })
+    }
+
+    const { email, password } = req.body
+
+    // Comprobar si el usuario existe
+    const user = await User.findOne({ where: { email }})
+    if(!user) {
+        // El usuario no exite
+        return res.render('auth/login', {
+            pagina: 'Iniciar Sesión',
+            errors: [{msg: 'El Email no existe'}]
+        })
+    }
+    // Comprobar si el usuario está confirmado
+    if(!user.confirmed) {
+        return res.render('auth/login', {
+            pagina: 'Iniciar Sesión',
+            errors: [{msg: 'Tu cuenta no ha sido confirmada'}]
+        })
+    }
+
+    // Revisar el password
+    if(!user.verifyPassword(password)) {
+        return res.render('auth/login', {
+            pagina: 'Iniciar Sesión',
+            errors: [{msg: 'La Contraseña es incorrecta'}]
+        })
+    }
+
+    // Autenticar al usuario
+    const token = generateJWT({id: user.id})
+
+    // Almacenar una cookie
+
+    return res.cookie('_token', token, {
+        httpOnly: true,
+        // secure: true   // parametro de seguridad donde solo deja la cookie si tienes https
+        // sameSite: true
+    }).redirect('/mis-propiedades')
+
+}
+
 
 const getFormRegister = (req, res) => {
     res.render('auth/register', {
@@ -64,7 +121,7 @@ const postRegister = async (req, res) => {
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
-        token: generarId()
+        token: generateId()
     })
 
     // Enviar email de confirmación
@@ -139,7 +196,7 @@ const postFormForgoPass = async (req, res) => {
     }
 
     // General token
-    userFind.token = generarId();
+    userFind.token = generateId();
     await userFind.save()
 
     // Enviar email
@@ -216,6 +273,7 @@ const postResetPass = async (req, res) => {
 
 export {
     getFormLogin,
+    postFormLogin,
     getFormRegister,
     postRegister,
     getConfirm,
