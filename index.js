@@ -1,6 +1,7 @@
 // const express = require('express');
 import express from 'express'
 import userRoutes from './routes/user.routes.js'
+import propertyRoutes from './routes/property.routes.js'
 import db from './config/db.js'
 
 // Crar la app
@@ -29,6 +30,7 @@ app.use( express.static('public'))
 
 // Routing
 app.use('/auth', userRoutes)
+app.use('/', propertyRoutes)
 
 
 // Define el puerto
