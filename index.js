@@ -1,7 +1,7 @@
 // const express = require('express');
 import express from 'express'
 import userRoutes from './routes/user.routes.js'
-import ownedRoutes from './routes/owned.routes.js'
+import ownRoutes from './routes/own.routes.js'
 import db from './config/db.js'
 
 // Crar la app
@@ -30,7 +30,7 @@ app.use( express.static('public'))
 
 // Routing
 app.use('/auth', userRoutes)
-app.use('/', ownedRoutes)
+app.use('/', ownRoutes)
 
 
 // Define el puerto

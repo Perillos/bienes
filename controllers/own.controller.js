@@ -1,6 +1,6 @@
 
 const admin = (req, res) => {
-    res.render('owned/admin', {
+    res.render('own/admin', {
         page: 'Mis Propiedades',
         bar: true
     })
@@ -9,7 +9,7 @@ const admin = (req, res) => {
 // Formulario para crear una nueva propiedad
 
 const create = (req, res) => {
-    res.render('owned/create', {
+    res.render('own/create', {
         page: 'Crear Propiedad',
         bar: true
     })
