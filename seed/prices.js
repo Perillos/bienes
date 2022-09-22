@@ -1,4 +1,4 @@
-const price = [
+const prices = [
     {
         nombre: '0 - $10,000 USD',
     },
@@ -31,4 +31,4 @@ const price = [
     }
 ]
 
-export default price;
+export default prices;
