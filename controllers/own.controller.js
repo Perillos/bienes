@@ -1,5 +1,5 @@
-import Price from '../models/price.model'
-import Category from '../models/category.model'
+import Price from '../models/price.model.js'
+import Category from '../models/category.model.js'
 
 
 const admin = (req, res) => {

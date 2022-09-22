@@ -28,11 +28,14 @@ block contents
                             label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="category") Categoría
                             select#category.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(name="category")
                                 option(value="") - Seleccione -
+                                each category in categories
+                                    option(value="category.id")= category.nombre  
                         div(class="md:w-1/2")
                             label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="price") Precio
                             select#price.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(name="price")
                                 option(value="") - Seleccione -
-
+                                each price in prices
+                                    option(value="price.id")= price.nombre
 
                     div(class="md:flex md:gap-4 .space-y-5 md:space-y-0")
                         div(class="md:w-1/3")
