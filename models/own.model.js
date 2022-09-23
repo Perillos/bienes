@@ -26,7 +26,7 @@ const Own = db.define('owns', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    bathroom: {
+    bathrooms: {
         type: DataTypes.INTEGER,
         allowNull: false
     },

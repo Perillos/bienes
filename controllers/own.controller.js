@@ -1,6 +1,6 @@
 import { validationResult } from 'express-validator'
-import Price from '../models/price.model.js'
-import Category from '../models/category.model.js'
+import { Price, Category, Own } from '../models/index.model.js'
+
 
 import { body } from "express-validator";
 const admin = (req, res) => {
@@ -50,6 +50,30 @@ const save = async (req, res) => {
             errors: result.array(),
             data: req.body
         })
+    }
+    
+    // Crear un Registro
+
+    const { title, description, bedrooms, rooms, bathrooms, calle, lat, lng, price: priceId, category: categoryId } = req.body // Al usar destructuring, se puede cambiar en nombre a la variable como en price y category
+
+    try {
+        const ownesSaving = await Own.create({
+            title,
+            description,
+            bedrooms,
+            rooms,
+            bathrooms,
+            calle,
+            lat,
+            lng,
+            priceId, // otra opción es no cambiar el nombre en el destructuring y asignarlo aquí, sería: price: priceId
+            categoryId
+
+        })
+
+
+    } catch (error) {
+        console.log(error);
     }
 }
 
