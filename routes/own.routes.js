@@ -1,11 +1,12 @@
 import express from "express";
 import { body } from "express-validator";
 import { admin, create, save } from "../controllers/own.controller.js";
+import protecRoutes from "../middleware/protecRoutes.js";
 
 const router = express.Router()
 
 
-router.get('/mis-propiedades', admin)
+router.get('/mis-propiedades', protecRoutes, admin)
 router.get('/propiedades/crear', create)
 router.post('/propiedades/crear',
         body('title').notEmpty().withMessage('El titulo del Anuncio es Obligatorio'),
@@ -16,7 +17,7 @@ router.post('/propiedades/crear',
         body('price').notEmpty().withMessage('Selecciona un rango de Precio'),
         body('bedrooms').notEmpty().withMessage('Selecciona la Cantidad de Habitaciones'),
         body('rooms').isNumeric().withMessage('Selecciona la Cantidad de Estancias'),
-        body('bathroom').isNumeric().withMessage('Selecciona la Cantidad de Baños'),
+        body('bathrooms').isNumeric().withMessage('Selecciona la Cantidad de Baños'),
         body('calle').notEmpty().withMessage('Ubica la Propiedad en el Mapa'),
     save
     )
