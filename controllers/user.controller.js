@@ -60,7 +60,7 @@ const postFormLogin = async (req, res) => {
 
     return res.cookie('_token', token, {
         httpOnly: true,
-        expires: 3600000 // lo que tarda en token en expirar en ms
+        // expires: 36 // lo que tarda en token en expirar en ms
         // secure: true   // parametro de seguridad donde solo deja la cookie si tienes https
         // sameSite: true
     }).redirect('/mis-propiedades')
