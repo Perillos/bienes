@@ -5,8 +5,7 @@ import { Price, Category, Own } from '../models/index.model.js'
 import { body } from "express-validator";
 const admin = (req, res) => {
     res.render('own/admin', {
-        page: 'Mis Propiedades',
-        bar: true
+        page: 'Mis Propiedades'
     })
 }
 
@@ -22,7 +21,6 @@ const create = async (req, res) => {
 
     res.render('own/create', {
         page: 'Crear Propiedad',
-        bar: true,
         categories, // Object literal de JS categories: categories
         prices,
         data: {}
@@ -44,7 +42,6 @@ const save = async (req, res) => {
         
         return res.render('own/create', {
             page: 'Crear Propiedad',
-            bar: true,
             categories,
             prices,
             errors: result.array(),
