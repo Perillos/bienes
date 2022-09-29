@@ -82,7 +82,7 @@ const save = async (req, res) => {
 
 const addImg = async (req, res) => {
     res.render('own/add-img', {
-        
+        page: 'Agregar Imagenes'
     })
 }
 
