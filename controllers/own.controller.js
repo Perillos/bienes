@@ -55,6 +55,7 @@ const save = async (req, res) => {
     // Crear un Registro
 
     const { title, description, bedrooms, rooms, bathrooms, calle, lat, lng, price: priceId, category: categoryId } = req.body // Al usar destructuring, se puede cambiar en nombre a la variable como en price y category
+    const { id: userId } = req.user
 
     try {
         const ownesSaving = await Own.create({
@@ -67,9 +68,14 @@ const save = async (req, res) => {
             lat,
             lng,
             priceId, // otra opción es no cambiar el nombre en el destructuring y asignarlo aquí, sería: price: priceId
-            categoryId
-
+            categoryId,
+            userId,
+            imagen: ''
         })
+
+        const { id } = ownesSaving
+
+        res.redirect(`/propiedades/agregar-imagen/${id}`)
 
 
     } catch (error) {
@@ -77,8 +83,15 @@ const save = async (req, res) => {
     }
 }
 
+const addImg = async (req, res) => {
+    res.render('own/add-img', {
+        
+    })
+}
+
 export {
     admin,
     create,
-    save
+    save,
+    addImg
 }

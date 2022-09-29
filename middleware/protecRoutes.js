@@ -12,13 +12,19 @@ const protecRoutes = async (req, res, next) => {
     // Comprobar el _token
     try {
          const decoded = jwt.verify(_token, process.env.JWR_SECRET)
-         const user = await User.findByPk(decoded.id)
-         console.log(user);
+         const user = await User.scope('deletePassword').findByPk(decoded.id)
 
+         // Almacenar el usuario al Req
+         if(user) {
+            req.user = user
+        } else {
+            return res.clearCookie('_token').redirect('/auth/login')
+        }
+        return next()
+        
     } catch (error) {
         return res.clearCookie('_token').redirect('/auth/login')
     }
-    next()
 }
 
 export default protecRoutes

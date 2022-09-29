@@ -1,14 +1,14 @@
 import express from "express";
 import { body } from "express-validator";
-import { admin, create, save } from "../controllers/own.controller.js";
+import { admin, create, save, addImg } from "../controllers/own.controller.js";
 import protecRoutes from "../middleware/protecRoutes.js";
 
 const router = express.Router()
 
 
 router.get('/mis-propiedades', protecRoutes, admin)
-router.get('/propiedades/crear', create)
-router.post('/propiedades/crear',
+router.get('/propiedades/crear', protecRoutes, create)
+router.post('/propiedades/crear', protecRoutes,
         body('title').notEmpty().withMessage('El titulo del Anuncio es Obligatorio'),
         body('description')
             .notEmpty().withMessage('La Descripción no puede ir vacia')
@@ -19,8 +19,8 @@ router.post('/propiedades/crear',
         body('rooms').isNumeric().withMessage('Selecciona la Cantidad de Estancias'),
         body('bathrooms').isNumeric().withMessage('Selecciona la Cantidad de Baños'),
         body('calle').notEmpty().withMessage('Ubica la Propiedad en el Mapa'),
-    save
+        save
     )
-
+router.get('/propiedades/agregar-imagen/:id', addImg)
 
 export default router
