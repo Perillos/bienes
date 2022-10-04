@@ -81,6 +81,29 @@ const save = async (req, res) => {
 }
 
 const addImg = async (req, res) => {
+
+    const { id } = req.params
+
+    // Validar que la propiedad exita
+    const owner = await Own.findByPk(id)
+
+    if(!owner) {
+        return res.redirect('/mis-propiedades')
+    }
+
+    // Validar que la propiedad no esté publicada
+
+    if(owner.publicado) {
+        return res.redirect('/mis-propiedades')
+    }
+
+    // Validar que la propiedad pertenece a quien visita esta página
+
+    if(req.user.id.toString() !== owner.userId.toString()) {
+        return res.redirect('/mis-propiedades')
+    }
+
+
     res.render('own/add-img', {
         page: 'Agregar Imagenes'
     })
