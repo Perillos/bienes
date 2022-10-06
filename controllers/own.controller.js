@@ -85,33 +85,74 @@ const addImg = async (req, res) => {
     const { id } = req.params
 
     // Validar que la propiedad exita
-    const owner = await Own.findByPk(id)
+    const owns = await Own.findByPk(id)
 
-    if(!owner) {
+    if(!owns) {
         return res.redirect('/mis-propiedades')
     }
 
     // Validar que la propiedad no esté publicada
 
-    if(owner.publicado) {
+    if(owns.publicado) {
         return res.redirect('/mis-propiedades')
     }
 
     // Validar que la propiedad pertenece a quien visita esta página
 
-    if(req.user.id.toString() !== owner.userId.toString()) {
+    if(req.user.id.toString() !== owns.userId.toString()) {
         return res.redirect('/mis-propiedades')
     }
 
 
     res.render('own/add-img', {
-        page: 'Agregar Imagenes'
+        page: `Agregar Imagenes: ${owns.title}`,
+        owns
     })
+}
+
+const storeImg = async (req, res, next) => {
+
+    const { id } = req.params
+
+    // Validar que la propiedad exita
+    const owns = await Own.findByPk(id)
+
+    if(!owns) {
+        return res.redirect('/mis-propiedades')
+    }
+
+    // Validar que la propiedad no esté publicada
+
+    if(owns.publicado) {
+        return res.redirect('/mis-propiedades')
+    }
+
+    // Validar que la propiedad pertenece a quien visita esta página
+
+    if(req.user.id.toString() !== owns.userId.toString()) {
+        return res.redirect('/mis-propiedades')
+    }
+
+    try {
+        console.log(req.file);
+
+        // Almacenar la imagen y publicar propieda
+        owns.imagen = req.file.filename
+        owns.publicado = 1
+
+        await owns.save()
+
+        next()
+
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 export {
     admin,
     create,
     save,
-    addImg
+    addImg,
+    storeImg
 }

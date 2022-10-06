@@ -26,7 +26,7 @@ eval("(function webpackUniversalModuleDefinition(root, factory) {\n\tif(true)\n\
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var dropzone__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! dropzone */ \"./node_modules/dropzone/dist/dropzone.js\");\n\n\n\ndropzone__WEBPACK_IMPORTED_MODULE_0__.Dropzone.options.image = {\n    dictDefaultMessage: 'Sube tus imágenes aquí'\n}\n\n//# sourceURL=webpack://bienesraices/./src/js/addimg.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var dropzone__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! dropzone */ \"./node_modules/dropzone/dist/dropzone.js\");\n\n\n\ndropzone__WEBPACK_IMPORTED_MODULE_0__.Dropzone.options.image = {\n    dictDefaultMessage: 'Sube tus imágenes aquí',\n    acceptedFiles: '.png, .jpg, .jpeg',\n    maxFilesize: 5,\n    maxFiles: 5,\n    parallelUploads: 1,\n    autoProcessQueue: false,\n    addRemoveLinks: true,\n    dictRemoveFile: 'Borrar',\n    dictMaxFilesExceede: 'El límite son 5 imagenes a la vez',\n    paramName: 'image',\n    init: function() {\n        const dropzone = this\n        const btnPublish = document.querySelector('#publicar')\n\n        btnPublish.addEventListener('click', function () {\n            dropzone.processQueue()\n        })\n\n        dropzone.on('queuecomplete', function() {\n            if (dropzone.getActiveFiles().length == 0) {\n                window.location.href = '/mis-propiedades'\n            }\n        })\n    }\n}\n\n//# sourceURL=webpack://bienesraices/./src/js/addimg.js?");
 
 /***/ })
 
