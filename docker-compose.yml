@@ -1,0 +1,31 @@
+version: '3.8'
+
+# servicos node v20 y mysql
+
+# services:
+#   mysqldb:
+#     container_name: mysqldb
+#     image: mysql
+#     environment:
+#       MYSQL_ROOT_PASSWORD: 12345
+#       MYSQL_DATABASE: faztdb
+#       MYSQL_USER: node
+#       MYSQL_PASSWORD: node
+#     restart: always
+#     ports:
+#       - 3307:3306
+#     volumes:
+#       - ./mysql:/var/lib/mysql
+
+
+
+services:
+  mysqldb:
+    container_name: mysqldb
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_USER}
+      MYSQL_DATABASE: ${DB_NAME}
+    restart: always
+    ports:
+      - 3307:3306

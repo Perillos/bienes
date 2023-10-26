@@ -21,7 +21,7 @@ try {
     db.sync()
     console.log('Conexión Correcta a la Base de Datos');
 } catch (error) {
-    console.log('Error en la conexión con al base de datos');
+    console.log(`Error en la conexión con al base de datos: ${error}`);
 }
 
 // Habiliar pug
